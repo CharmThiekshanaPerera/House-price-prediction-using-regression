@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>House Price Prediction</title>
+</head>
+<body>
+    <h1>Enter the details of the house to predict the price</h1>
+    <form action="/predict" method="POST">
+        <label>Number of bedrooms:</label>
+        <input type="number" name="bedrooms" required><br>
+
+        <label>Grade of the house (1-13):</label>
+        <input type="number" name="grade" required><br>
+
+        <label>Has basement (1 for Yes, 0 for No):</label>
+        <input type="number" name="has_basement" required><br>
+
+        <label>Living area in square meters:</label>
+        <input type="number" name="living_in_m2" step="0.1" required><br>
+
+        <label>Renovated (1 for Yes, 0 for No):</label>
+        <input type="number" name="renovated" required><br>
+
+        <label>Nice view (1 for Yes, 0 for No):</label>
+        <input type="number" name="nice_view" required><br>
+
+        <label>Perfect condition (1 for Yes, 0 for No):</label>
+        <input type="number" name="perfect_condition" required><br>
+
+        <label>Number of real bathrooms:</label>
+        <input type="number" name="real_bathrooms" required><br>
+
+        <label>Has lavatory (1 for Yes, 0 for No):</label>
+        <input type="number" name="has_lavatory" required><br>
+
+        <label>Single floor house (1 for Yes, 0 for No):</label>
+        <input type="number" name="single_floor" required><br>
+
+        <label>Month of sale (1-12):</label>
+        <input type="number" name="month" required><br>
+
+        <label>Quartile zone (1-4):</label>
+        <input type="number" name="quartile_zone" required><br>
+
+        <label>Year of sale:</label>
+        <input type="number" name="year" required><br>
+
+        <button type="submit">Predict Price</button>
+    </form>
+</body>
+</html>
