@@ -4,10 +4,46 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Prediction Result</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column;
+        }
+        h1 {
+            color: #333;
+        }
+        p {
+            font-size: 1.5em;
+            color: #28a745;
+        }
+        a {
+            margin-top: 20px;
+            color: #007bff;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
 </head>
 <body>
     <h1>Predicted House Price</h1>
     <p>The predicted price is: ${{ price }}</p>
     <a href="/">Go back to enter more data</a>
+
+    <script>
+        // You can add any JavaScript logic here if needed
+        // For example, you could add a timer to redirect the user back to the form after a few seconds
+        setTimeout(() => {
+            window.location.href = "/";
+        }, 10000); // Redirect after 10 seconds
+    </script>
 </body>
 </html>

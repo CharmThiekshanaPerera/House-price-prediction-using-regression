@@ -4,10 +4,57 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>House Price Prediction</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 300px;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #555;
+        }
+        input[type="number"] {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #28a745;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+    </style>
 </head>
 <body>
     <h1>Enter the details of the house to predict the price</h1>
-    <form action="/predict" method="POST">
+    <form action="/predict" method="POST" onsubmit="return validateForm()">
         <label>Number of bedrooms:</label>
         <input type="number" name="bedrooms" required><br>
 
@@ -49,5 +96,30 @@
 
         <button type="submit">Predict Price</button>
     </form>
+
+    <script>
+        function validateForm() {
+            const grade = document.querySelector('input[name="grade"]').value;
+            const month = document.querySelector('input[name="month"]').value;
+            const quartileZone = document.querySelector('input[name="quartile_zone"]').value;
+
+            if (grade < 1 || grade > 13) {
+                alert("Grade must be between 1 and 13.");
+                return false;
+            }
+
+            if (month < 1 || month > 12) {
+                alert("Month must be between 1 and 12.");
+                return false;
+            }
+
+            if (quartileZone < 1 || quartileZone > 4) {
+                alert("Quartile zone must be between 1 and 4.");
+                return false;
+            }
+
+            return true;
+        }
+    </script>
 </body>
 </html>
