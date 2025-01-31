@@ -1,12 +1,14 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, jsonify
 import numpy as np
 import joblib
+from flask_cors import CORS
 
 app = Flask(__name__)
+CORS(app)  # Enable CORS to allow requests from the React Native app
 
 # Load the trained model and scaler
-model = joblib.load('house_price_model.pkl')  # Make sure this is your saved model
-scaler = joblib.load('scaler.pkl')  # Make sure this is your saved scaler
+model = joblib.load('house_price_model.pkl')  # Ensure this is the correct model
+scaler = joblib.load('scaler.pkl')  # Ensure this is the correct scaler
 
 @app.route('/')
 def home():
@@ -14,38 +16,35 @@ def home():
 
 @app.route('/predict', methods=['POST'])
 def predict():
-    if request.method == 'POST':
-        # Get form data
-        bedrooms = int(request.form['bedrooms'])
-        grade = int(request.form['grade'])
-        has_basement = int(request.form['has_basement'])
-        living_in_m2 = float(request.form['living_in_m2'])
-        renovated = int(request.form['renovated'])
-        nice_view = int(request.form['nice_view'])
-        perfect_condition = int(request.form['perfect_condition'])
-        real_bathrooms = int(request.form['real_bathrooms'])
-        has_lavatory = int(request.form['has_lavatory'])
-        single_floor = int(request.form['single_floor'])
-        month = int(request.form['month'])
-        quartile_zone = int(request.form['quartile_zone'])
-        year = int(request.form['year'])
-        
-        # Prepare input data in the correct order
-        input_data = np.array([[bedrooms, grade, has_basement, living_in_m2, renovated, nice_view, 
-                                perfect_condition, real_bathrooms, has_lavatory, single_floor, 
-                                month, quartile_zone, year]])
-        
-        # Scale the input data
+    try:
+        if request.content_type == 'application/json':
+            data = request.get_json()
+        else:
+            data = request.form
+
+        # Extract features
+        features = [
+            int(data['bedrooms']), int(data['grade']), int(data['has_basement']), float(data['living_in_m2']),
+            int(data['renovated']), int(data['nice_view']), int(data['perfect_condition']), int(data['real_bathrooms']),
+            int(data['has_lavatory']), int(data['single_floor']), int(data['month']), int(data['quartile_zone']), int(data['year'])
+        ]
+
+        # Prepare input data
+        input_data = np.array([features])
         input_scaled = scaler.transform(input_data)
+        predicted_price = model.predict(input_scaled)[0]
+
+        # Return JSON response for mobile app
+        if request.content_type == 'application/json':
+            return jsonify({'prediction': round(predicted_price, 2)})
         
-        # Make the prediction
-        predicted_price = model.predict(input_scaled)
-        
-        # Display result
-        return render_template('result.html', price=round(predicted_price[0], 2))
+        # Render result for web app
+        return render_template('result.html', price=round(predicted_price, 2))
+    
+    except KeyError as e:
+        return jsonify({'error': f'Missing key: {str(e)}'}), 400
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
 
 if __name__ == '__main__':
-    app.run(debug=True)
-
-
-
+    app.run(debug=True, host='0.0.0.0', port=5000)

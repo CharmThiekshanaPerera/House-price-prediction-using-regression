@@ -3,123 +3,144 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>House Price Prediction</title>
+    <title>DreamHouse - House Price Prediction</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
         }
-        h1 {
+        .navbar-brand {
+            font-weight: bold;
+        }
+        .hero {
+            background-image: url('https://via.placeholder.com/1920x600');
+            background-size: cover;
+            background-position: center;
+            color: white;
             text-align: center;
-            color: #333;
+            padding: 100px 20px;
         }
-        form {
-            background-color: #fff;
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: bold;
+        }
+        .hero p {
+            font-size: 1.5rem;
+        }
+        footer {
+            background-color: #f8f9fa;
             padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            width: 300px;
-        }
-        label {
-            display: block;
-            margin-bottom: 8px;
-            color: #555;
-        }
-        input[type="number"] {
-            width: 100%;
-            padding: 8px;
-            margin-bottom: 15px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-        }
-        button {
-            width: 100%;
-            padding: 10px;
-            background-color: #28a745;
-            color: #fff;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-        button:hover {
-            background-color: #218838;
+            text-align: center;
+            margin-top: 50px;
         }
     </style>
 </head>
 <body>
-    <h1>Enter the details of the house to predict the price</h1>
-    <form action="/predict" method="POST" onsubmit="return validateForm()">
-        <label>Number of bedrooms:</label>
-        <input type="number" name="bedrooms" required><br>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">DreamHouse</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#home">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#features">Features</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#predict">Predict</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#about">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#contact">Contact</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
 
-        <label>Grade of the house (1-13):</label>
-        <input type="number" name="grade" required><br>
+    <!-- Hero Section -->
+    <div class="hero">
+        <h1>DreamHouse</h1>
+        <p>Accurate and Instant House Price Predictions</p>
+        <a href="#predict" class="btn btn-primary btn-lg">Get Started</a>
+    </div>
 
-        <label>Has basement (1 for Yes, 0 for No):</label>
-        <input type="number" name="has_basement" required><br>
+    <!-- Prediction Form Section -->
+    <section id="predict" class="py-5 bg-light">
+        <div class="container">
+            <h2 class="text-center mb-4">Predict House Price</h2>
+            <form action="/predict" method="POST" class="mx-auto" style="max-width: 500px;">
+                <div class="mb-3">
+                    <label for="bedrooms" class="form-label">Number of Bedrooms</label>
+                    <input type="number" class="form-control" name="bedrooms" required>
+                </div>
+                <div class="mb-3">
+                    <label for="grade" class="form-label">Grade (1-13)</label>
+                    <input type="number" class="form-control" name="grade" required>
+                </div>
+                <div class="mb-3">
+                    <label for="has_basement" class="form-label">Has basement (1 for Yes, 0 for No)</label>
+                    <input type="number" class="form-control" name="has_basement" required>
+                </div>
+                <div class="mb-3">
+                    <label for="living_in_m2" class="form-label">Living area in square meters</label>
+                    <input type="number" step="0.1" class="form-control" name="living_in_m2" required>
+                </div>
+                <div class="mb-3">
+                    <label for="renovated" class="form-label">Renovated (1 for Yes, 0 for No)</label>
+                    <input type="number" class="form-control" name="renovated" required>
+                </div>
+                <div class="mb-3">
+                    <label for="nice_view" class="form-label">Nice view (1 for Yes, 0 for No)</label>
+                    <input type="number" class="form-control" name="nice_view" required>
+                </div>
+                <div class="mb-3">
+                    <label for="perfect_condition" class="form-label">Perfect condition (1 for Yes, 0 for No)</label>
+                    <input type="number" class="form-control" name="perfect_condition" required>
+                </div>
+                <div class="mb-3">
+                    <label for="real_bathrooms" class="form-label">Number of real bathrooms</label>
+                    <input type="number" class="form-control" name="real_bathrooms" required>
+                </div>
+                <div class="mb-3">
+                    <label for="has_lavatory" class="form-label">Has lavatory (1 for Yes, 0 for No)</label>
+                    <input type="number" class="form-control" name="has_lavatory" required>
+                </div>
+                <div class="mb-3">
+                    <label for="single_floor" class="form-label">Single floor house (1 for Yes, 0 for No)</label>
+                    <input type="number" class="form-control" name="single_floor" required>
+                </div>
+                <div class="mb-3">
+                    <label for="month" class="form-label">Month of sale (1-12)</label>
+                    <input type="number" class="form-control" name="month" required>
+                </div>
+                <div class="mb-3">
+                    <label for="quartile_zone" class="form-label">Quartile zone (1-4)</label>
+                    <input type="number" class="form-control" name="quartile_zone" required>
+                </div>
+                <div class="mb-3">
+                    <label for="year" class="form-label">Year of sale</label>
+                    <input type="number" class="form-control" name="year" required>
+                </div>
+                <button type="submit" class="btn btn-primary w-100">Predict Price</button>
+            </form>
+        </div>
+    </section>
 
-        <label>Living area in square meters:</label>
-        <input type="number" name="living_in_m2" step="0.1" required><br>
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2025 DreamHouse. All rights reserved.</p>
+    </footer>
 
-        <label>Renovated (1 for Yes, 0 for No):</label>
-        <input type="number" name="renovated" required><br>
-
-        <label>Nice view (1 for Yes, 0 for No):</label>
-        <input type="number" name="nice_view" required><br>
-
-        <label>Perfect condition (1 for Yes, 0 for No):</label>
-        <input type="number" name="perfect_condition" required><br>
-
-        <label>Number of real bathrooms:</label>
-        <input type="number" name="real_bathrooms" required><br>
-
-        <label>Has lavatory (1 for Yes, 0 for No):</label>
-        <input type="number" name="has_lavatory" required><br>
-
-        <label>Single floor house (1 for Yes, 0 for No):</label>
-        <input type="number" name="single_floor" required><br>
-
-        <label>Month of sale (1-12):</label>
-        <input type="number" name="month" required><br>
-
-        <label>Quartile zone (1-4):</label>
-        <input type="number" name="quartile_zone" required><br>
-
-        <label>Year of sale:</label>
-        <input type="number" name="year" required><br>
-
-        <button type="submit">Predict Price</button>
-    </form>
-
-    <script>
-        function validateForm() {
-            const grade = document.querySelector('input[name="grade"]').value;
-            const month = document.querySelector('input[name="month"]').value;
-            const quartileZone = document.querySelector('input[name="quartile_zone"]').value;
-
-            if (grade < 1 || grade > 13) {
-                alert("Grade must be between 1 and 13.");
-                return false;
-            }
-
-            if (month < 1 || month > 12) {
-                alert("Month must be between 1 and 12.");
-                return false;
-            }
-
-            if (quartileZone < 1 || quartileZone > 4) {
-                alert("Quartile zone must be between 1 and 4.");
-                return false;
-            }
-
-            return true;
-        }
-    </script>
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
