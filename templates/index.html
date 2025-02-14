@@ -1,146 +1,65 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DreamHouse - House Price Prediction</title>
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-        }
-        .navbar-brand {
-            font-weight: bold;
-        }
-        .hero {
-            background-image: url('https://via.placeholder.com/1920x600');
-            background-size: cover;
-            background-position: center;
-            color: white;
-            text-align: center;
-            padding: 100px 20px;
-        }
-        .hero h1 {
-            font-size: 3.5rem;
-            font-weight: bold;
-        }
-        .hero p {
-            font-size: 1.5rem;
-        }
-        footer {
-            background-color: #f8f9fa;
-            padding: 20px;
-            text-align: center;
-            margin-top: 50px;
-        }
-    </style>
-</head>
-<body>
-    <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="#">DreamHouse</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="#home">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#features">Features</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#predict">Predict</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#about">About</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#contact">Contact</a>
-                    </li>
-                </ul>
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-8 offset-md-2">
+        <h1 class="text-center">House Price Prediction</h1>
+        <p class="text-center">Enter the details of the house to get an estimated price.</p>
+        <form id="predictionForm" action="/predict" method="POST">
+            <div class="mb-3">
+                <label for="bedrooms" class="form-label">Number of Bedrooms</label>
+                <input type="number" class="form-control" id="bedrooms" name="bedrooms" required>
             </div>
-        </div>
-    </nav>
-
-    <!-- Hero Section -->
-    <div class="hero">
-        <h1>DreamHouse</h1>
-        <p>Accurate and Instant House Price Predictions</p>
-        <a href="#predict" class="btn btn-primary btn-lg">Get Started</a>
+            <div class="mb-3">
+                <label for="grade" class="form-label">Grade</label>
+                <input type="number" class="form-control" id="grade" name="grade" required>
+            </div>
+            <div class="mb-3">
+                <label for="has_basement" class="form-label">Has Basement (1 for Yes, 0 for No)</label>
+                <input type="number" class="form-control" id="has_basement" name="has_basement" required>
+            </div>
+            <div class="mb-3">
+                <label for="living_in_m2" class="form-label">Living Area (in m²)</label>
+                <input type="number" step="0.01" class="form-control" id="living_in_m2" name="living_in_m2" required>
+            </div>
+            <div class="mb-3">
+                <label for="renovated" class="form-label">Renovated (1 for Yes, 0 for No)</label>
+                <input type="number" class="form-control" id="renovated" name="renovated" required>
+            </div>
+            <div class="mb-3">
+                <label for="nice_view" class="form-label">Nice View (1 for Yes, 0 for No)</label>
+                <input type="number" class="form-control" id="nice_view" name="nice_view" required>
+            </div>
+            <div class="mb-3">
+                <label for="perfect_condition" class="form-label">Perfect Condition (1 for Yes, 0 for No)</label>
+                <input type="number" class="form-control" id="perfect_condition" name="perfect_condition" required>
+            </div>
+            <div class="mb-3">
+                <label for="real_bathrooms" class="form-label">Number of Bathrooms</label>
+                <input type="number" class="form-control" id="real_bathrooms" name="real_bathrooms" required>
+            </div>
+            <div class="mb-3">
+                <label for="has_lavatory" class="form-label">Has Lavatory (1 for Yes, 0 for No)</label>
+                <input type="number" class="form-control" id="has_lavatory" name="has_lavatory" required>
+            </div>
+            <div class="mb-3">
+                <label for="single_floor" class="form-label">Single Floor (1 for Yes, 0 for No)</label>
+                <input type="number" class="form-control" id="single_floor" name="single_floor" required>
+            </div>
+            <div class="mb-3">
+                <label for="month" class="form-label">Month</label>
+                <input type="number" class="form-control" id="month" name="month" required>
+            </div>
+            <div class="mb-3">
+                <label for="quartile_zone" class="form-label">Quartile Zone</label>
+                <input type="number" class="form-control" id="quartile_zone" name="quartile_zone" required>
+            </div>
+            <div class="mb-3">
+                <label for="year" class="form-label">Year</label>
+                <input type="number" class="form-control" id="year" name="year" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Predict Price</button>
+        </form>
     </div>
-
-    <!-- Prediction Form Section -->
-    <section id="predict" class="py-5 bg-light">
-        <div class="container">
-            <h2 class="text-center mb-4">Predict House Price</h2>
-            <form action="/predict" method="POST" class="mx-auto" style="max-width: 500px;">
-                <div class="mb-3">
-                    <label for="bedrooms" class="form-label">Number of Bedrooms</label>
-                    <input type="number" class="form-control" name="bedrooms" required>
-                </div>
-                <div class="mb-3">
-                    <label for="grade" class="form-label">Grade (1-13)</label>
-                    <input type="number" class="form-control" name="grade" required>
-                </div>
-                <div class="mb-3">
-                    <label for="has_basement" class="form-label">Has basement (1 for Yes, 0 for No)</label>
-                    <input type="number" class="form-control" name="has_basement" required>
-                </div>
-                <div class="mb-3">
-                    <label for="living_in_m2" class="form-label">Living area in square meters</label>
-                    <input type="number" step="0.1" class="form-control" name="living_in_m2" required>
-                </div>
-                <div class="mb-3">
-                    <label for="renovated" class="form-label">Renovated (1 for Yes, 0 for No)</label>
-                    <input type="number" class="form-control" name="renovated" required>
-                </div>
-                <div class="mb-3">
-                    <label for="nice_view" class="form-label">Nice view (1 for Yes, 0 for No)</label>
-                    <input type="number" class="form-control" name="nice_view" required>
-                </div>
-                <div class="mb-3">
-                    <label for="perfect_condition" class="form-label">Perfect condition (1 for Yes, 0 for No)</label>
-                    <input type="number" class="form-control" name="perfect_condition" required>
-                </div>
-                <div class="mb-3">
-                    <label for="real_bathrooms" class="form-label">Number of real bathrooms</label>
-                    <input type="number" class="form-control" name="real_bathrooms" required>
-                </div>
-                <div class="mb-3">
-                    <label for="has_lavatory" class="form-label">Has lavatory (1 for Yes, 0 for No)</label>
-                    <input type="number" class="form-control" name="has_lavatory" required>
-                </div>
-                <div class="mb-3">
-                    <label for="single_floor" class="form-label">Single floor house (1 for Yes, 0 for No)</label>
-                    <input type="number" class="form-control" name="single_floor" required>
-                </div>
-                <div class="mb-3">
-                    <label for="month" class="form-label">Month of sale (1-12)</label>
-                    <input type="number" class="form-control" name="month" required>
-                </div>
-                <div class="mb-3">
-                    <label for="quartile_zone" class="form-label">Quartile zone (1-4)</label>
-                    <input type="number" class="form-control" name="quartile_zone" required>
-                </div>
-                <div class="mb-3">
-                    <label for="year" class="form-label">Year of sale</label>
-                    <input type="number" class="form-control" name="year" required>
-                </div>
-                <button type="submit" class="btn btn-primary w-100">Predict Price</button>
-            </form>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer>
-        <p>&copy; 2025 DreamHouse. All rights reserved.</p>
-    </footer>
-
-    <!-- Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-</body>
-</html>
+</div>
+{% endblock %}

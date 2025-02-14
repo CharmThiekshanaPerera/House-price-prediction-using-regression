@@ -14,6 +14,22 @@ scaler = joblib.load('scaler.pkl')  # Ensure this is the correct scaler
 def home():
     return render_template('index.html')
 
+@app.route('/about')
+def about():
+    return render_template('about.html')
+
+@app.route('/contact')
+def contact():
+    return render_template('contact.html')
+
+@app.route('/features')
+def features():
+    return render_template('features.html')
+
+@app.route('/location')
+def location():
+    return render_template('location.html')
+
 @app.route('/predict', methods=['POST'])
 def predict():
     try:
@@ -33,6 +49,9 @@ def predict():
         input_data = np.array([features])
         input_scaled = scaler.transform(input_data)
         predicted_price = model.predict(input_scaled)[0]
+
+        # Ensure predicted price is non-negative
+        predicted_price = max(predicted_price, 0)  # Prevents negative values
 
         # Return JSON response for mobile app
         if request.content_type == 'application/json':
