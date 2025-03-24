@@ -1,0 +1,11 @@
+.qodo
+venv
+__pycache__
+*.pyc
+*.pyo
+*.pyd
+*.pyw
+*.pyz
+*.pyz.d
+*.pyw.d
+*.pyc.d     
